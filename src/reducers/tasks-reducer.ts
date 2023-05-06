@@ -1,42 +1,48 @@
 import {TasksType} from "../App";
 import {v1} from "uuid";
+import {addTodolistAC, removeTodolistAC} from "./todolists-reducer";
 
-export const tasksReducer = (state: TasksType, action: ActionsType): TasksType => {
-  switch (action.type) {
+export const tasksReducer = (state: TasksType, {type, payload}: ActionsType): TasksType => {
+  switch (type) {
 
     case "REMOVE-TASK": {
-      return {...state,
-        [action.payload.todolistID]:
-          state[action.payload.todolistID].filter(el => el.id !== action.payload.taskID)}
+      return {
+        ...state,
+        [payload.todolistID]:
+          state[payload.todolistID].filter(el => el.id !== payload.taskID)
+      }
+    }
+
+    case 'ADD-TODOLIST': {
+      return {...state, [payload.todolistID]: []}
+    }
+
+    case 'REMOVE-TODOLIST': {
+      let stateCopy = {...state}
+      delete stateCopy[payload.todolistID]
+      return {...stateCopy}
     }
 
     case "ADD-TASK": {
-      const newTask = {id: v1(), title: action.payload.newTitle, isDone: false}
-      return {...state, [action.payload.todolistID]: [newTask, ...state[action.payload.todolistID]]}
+      const newTask = {id: v1(), title: payload.newTitle, isDone: false}
+      return {...state, [payload.todolistID]: [newTask, ...state[payload.todolistID]]}
     }
 
     case 'UPDATE-TASK': {
-      return {...state, [action.payload.todolistID]: state[action.payload.todolistID]
-          .map(t => t.id === action.payload.taskID ? {...t, title: action.payload.newTitle} : t)}
+      return {
+        ...state, [payload.todolistID]: state[payload.todolistID]
+          .map(t => t.id === payload.taskID ? {...t, title: payload.newTitle} : t)
+      }
     }
 
     case "CHANGE-IS-DONE": {
-      return {...state, [action.payload.todolistID]: state[action.payload.todolistID]
-          .map(t => t.id === action.payload.taskID ? {...t, isDone: action.payload.isDone} : t)}
+      return {
+        ...state, [payload.todolistID]: state[payload.todolistID]
+          .map(t => t.id === payload.taskID ? {...t, isDone: payload.isDone} : t)
+      }
     }
 
-    case 'ADD-NEW-TASKS': {
-      const newTasks = [
-          {id: v1(), title: 'HTML&CSS', isDone: true},
-          {id: v1(), title: 'JS', isDone: true}
-        ]
-      return {...state, [action.payload.todolistID]: newTasks }
-    }
 
-    case 'DELETE-ALL-TASKS': {
-      delete state[action.payload.todolistID]
-      return {...state}
-    }
 
     default: {
       return state
@@ -49,8 +55,8 @@ type ActionsType =
   ReturnType<typeof addTaskAC> |
   ReturnType<typeof updateTaskAC> |
   ReturnType<typeof changeIsDoneAC> |
-  ReturnType<typeof addNewTasksAC> |
-  ReturnType<typeof deleteTasksAC>
+  ReturnType<typeof addTodolistAC> |
+  ReturnType<typeof removeTodolistAC>
 
 export const removeTaskAC = (todolistID: string, taskID: string) => {
   return {
@@ -93,22 +99,3 @@ export const changeIsDoneAC = (todolistID: string, taskID: string, isDone: boole
     }
   } as const
 }
-
-export const addNewTasksAC = (todolistID: string) => {
-  return {
-    type: 'ADD-NEW-TASKS',
-    payload: {
-      todolistID
-    }
-  } as const
-}
-
-export const deleteTasksAC = (todolistID: string) => {
-  return {
-    type: 'DELETE-ALL-TASKS',
-    payload: {
-      todolistID
-    }
-  } as const
-}
-

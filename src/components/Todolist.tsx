@@ -34,6 +34,7 @@ export const Todolist = (props: PropsType) => {
   const [buttonName, setButtonName] = useState<filterType>("all")
 
   let tasksForTodolist = props.tasks
+  console.log(tasksForTodolist)
 
   if (props.filter === "active") {
     tasksForTodolist = props.tasks.filter(el => !el.isDone)

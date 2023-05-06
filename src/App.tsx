@@ -7,9 +7,8 @@ import {ButtonAppBar} from "./components/ButtonAppBar";
 import Container from '@mui/material/Container';
 import {Grid, Paper} from "@mui/material";
 import {
-  addNewTasksAC,
   addTaskAC,
-  changeIsDoneAC, deleteTasksAC,
+  changeIsDoneAC,
   removeTaskAC,
   tasksReducer,
   updateTaskAC
@@ -59,6 +58,9 @@ function App() {
     ]
   })
 
+  // console.log(todolists)
+  // console.log(tasks)
+
   const updateTodolist = (todolistID: string, newTitle: string) => {
     todolistsDispatch(updateTodolistAC(todolistID, newTitle))
   }
@@ -69,16 +71,13 @@ function App() {
 
   const removeTodolist = (todolistID: string) => {
     todolistsDispatch(removeTodolistAC(todolistID))
-    tasksDispatch(deleteTasksAC(todolistID))
-    // setTodolists(todolists.filter(el => el.id !== todolistID))
-    // delete tasks[todolistID]
-    // setTasks({...tasks})
+    tasksDispatch(removeTodolistAC(todolistID))
   }
 
   const addTodolist = (title: string) => {
-    const newTodolistId = v1()
-    todolistsDispatch(addTodolistAC(newTodolistId, title))
-    tasksDispatch(addNewTasksAC(newTodolistId))
+    let action = addTodolistAC(title)
+    todolistsDispatch(action)
+    tasksDispatch(action)
   }
 
   const updateTask = (todolistID: string, taskID: string, newTitle: string) => {
