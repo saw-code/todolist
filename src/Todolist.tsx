@@ -9,7 +9,6 @@ import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import {pink} from '@mui/material/colors';
 
-
 type PropsType = {
   todolistID: string
   title: string
@@ -48,10 +47,6 @@ export const Todolist = (props: PropsType) => {
     props.removeTask(props.todolistID, taskID)
   }
 
-  const changeIsDoneHandler = (taskID: string, event: ChangeEvent<HTMLInputElement>) => {
-    props.changeIsDone(props.todolistID, taskID, event.currentTarget.checked)
-  }
-
   const removeTodolistHandler = () => {
     props.removeTodolist(props.todolistID)
   }
@@ -83,7 +78,12 @@ export const Todolist = (props: PropsType) => {
     props.updateTask(props.todolistID, taskID, updateTitle)
   }
 
+  const changeIsDoneHandler = (taskID: string, event: ChangeEvent<HTMLInputElement>) => {
+    props.changeIsDone(props.todolistID, taskID, event.currentTarget.checked)
+  }
+
   let tasks = tasksForTodolist.map(el => {
+
     return <li key={el.id}>
       <IconButton onClick={() => removeTaskHandler(el.id)} aria-label="delete">
         <DeleteIcon/>
