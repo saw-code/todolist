@@ -1,9 +1,9 @@
-import React, {useReducer, useState} from 'react';
+import React, {useReducer} from 'react';
 import './App.css';
-import {TaskType, Todolist} from "./Todolist";
+import {TaskType, Todolist} from "./components/Todolist";
 import {v1} from "uuid";
-import {AddItemForm} from "./AddItemForm";
-import {ButtonAppBar} from "./ButtonAppBar";
+import {AddItemForm} from "./components/AddItemForm";
+import {ButtonAppBar} from "./components/ButtonAppBar";
 import Container from '@mui/material/Container';
 import {Grid, Paper} from "@mui/material";
 import {
@@ -58,8 +58,6 @@ function App() {
       {id: v1(), title: 'GraphQL', isDone: false},
     ]
   })
-  console.log(todolists)
-  console.log(tasks)
 
   const updateTodolist = (todolistID: string, newTitle: string) => {
     todolistsDispatch(updateTodolistAC(todolistID, newTitle))

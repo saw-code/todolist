@@ -1,5 +1,5 @@
 import React, {useState, ChangeEvent, MouseEvent} from 'react';
-import {filterType} from "./App";
+import {filterType} from "../App";
 import styles from "./Todolist.module.css"
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
