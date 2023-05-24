@@ -1,22 +1,11 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {TaskType} from "./components/Todolist";
 import {AddItemForm} from "./components/AddItemForm";
 import {ButtonAppBar} from "./components/ButtonAppBar";
 import Container from '@mui/material/Container';
 import {Grid, Paper} from "@mui/material";
-import {
-  addTaskAC,
-  changeIsDoneAC,
-  removeTaskAC,
-  updateTaskAC
-} from "./state/tasks-reducer";
-import {
-  addTodolistAC,
-  changeFilterAC,
-  removeTodolistAC,
-  updateTodolistAC
-} from "./state/todolists-reducer";
+import {addTodolistAC} from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 import {TodolistWithRedux} from "./components/TodolistWithRedux";
@@ -72,9 +61,9 @@ function AppWithRedux() {
   //   dispatch(removeTodolistAC(todolistID))
   // }
 
-  const addTodolist = (title: string) => {
+  const addTodolist = useCallback((title: string) => {
     dispatch(addTodolistAC(title))
-  }
+  },[dispatch])
 
 
   return (
@@ -85,6 +74,7 @@ function AppWithRedux() {
           <AddItemForm callBack={addTodolist}/>
         </Grid>
         <Grid container spacing={3}>
+
           {todolists.map(el => {
             return <Grid key={el.id} item>
               <Paper key={el.id} elevation={3} style={{padding: "10px"}}>
