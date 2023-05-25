@@ -11,13 +11,12 @@ import {AppRootStateType} from "../state/store";
 import {filterType} from "../AppWithRedux";
 
 export type TaskPropsType = {
-  filter: filterType
+  tasksForTodolist: TaskType[]
   todolistId: string
 }
 
 export const Task = (props: TaskPropsType) => {
 
-  const tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[props.todolistId])
   const dispatch = useDispatch()
 
   const removeTaskHandler = (taskID: string) => {
@@ -32,17 +31,7 @@ export const Task = (props: TaskPropsType) => {
     dispatch(changeIsDoneAC(props.todolistId, taskID, event.currentTarget.checked))
   }
 
-  let tasksForTodolist = tasks
-
-  if (props.filter === "active") {
-    tasksForTodolist = tasks.filter(el => !el.isDone)
-  }
-
-  if (props.filter === "completed") {
-    tasksForTodolist = tasks.filter(el => el.isDone)
-  }
-
-  const tasksMap = tasksForTodolist.map(el => {
+  const tasksMap = props.tasksForTodolist.map(el => {
     return <li key={el.id}>
       <IconButton onClick={() => removeTaskHandler(el.id)} aria-label="delete">
         <DeleteIcon/>

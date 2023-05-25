@@ -29,6 +29,7 @@ export const TodolistWithRedux = memo(({todolist}: PropsType) => {
 
   const [buttonName, setButtonName] = useState<filterType>("all")
 
+  const tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[id])
   const dispatch = useDispatch()
 
   const removeTodolistHandler = () => {
@@ -58,6 +59,16 @@ export const TodolistWithRedux = memo(({todolist}: PropsType) => {
     dispatch(addTaskAC(id, newTitle))
   }
 
+  let tasksForTodolist = tasks
+
+  if (filter === "active") {
+    tasksForTodolist = tasks.filter(el => !el.isDone)
+  }
+
+  if (filter === "completed") {
+    tasksForTodolist = tasks.filter(el => el.isDone)
+  }
+
   return (
     <div>
       <div>
@@ -69,7 +80,7 @@ export const TodolistWithRedux = memo(({todolist}: PropsType) => {
         </h3>
         <AddItemForm callBack={addTaskTransitHandler}/>
         <ul>
-          <Task todolistId={id} filter={filter}/>
+          <Task todolistId={id} tasksForTodolist={tasksForTodolist}/>
         </ul>
         <div>
           <Button onClick={onAllClickHandler} variant={buttonName === "all" ? "contained" : "outlined"} color="success">
