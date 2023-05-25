@@ -39,47 +39,24 @@ export const TodolistWithRedux = memo(({todolist}: PropsType) => {
     dispatch(updateTodolistAC(id, newTitle))
   }
 
-  const onAllClickHandler = useCallback(() => {
+  const onAllClickHandler = () => {
     dispatch(changeFilterAC(id, "all"))
     setButtonName("all")
-  }, [id])
+  }
 
-  const onActiveClickHandler = useCallback(() => {
+  const onActiveClickHandler = () => {
     dispatch(changeFilterAC(id, "active"))
     setButtonName("active")
-  }, [id])
+  }
 
-  const onCompletedClickHandler = useCallback(() => {
+  const onCompletedClickHandler = () => {
     dispatch(changeFilterAC(id, "completed"))
     setButtonName("completed")
-  }, [id])
+  }
 
   const addTaskTransitHandler = (newTitle: string) => {
     dispatch(addTaskAC(id, newTitle))
   }
-
-  // let tasksMap = tasksForTodolist.map(el => {
-
-
-
-    // <li key={el.id}>
-    //   <IconButton onClick={() => removeTaskHandler(el.id)} aria-label="delete">
-    //     <DeleteIcon/>
-    //   </IconButton>
-    //
-    //   <Checkbox
-    //     defaultChecked
-    //     sx={{color: pink[800], '&.Mui-checked': {color: pink[600],},}}
-    //     onChange={(event) => changeIsDoneHandler(el.id, event)}
-    //     checked={el.isDone}
-    //   />
-    //
-    //   <EditableSpan
-    //     oldTitle={el.title}
-    //     callBack={(updateTitle) => updateTaskTransitHandler(el.id, updateTitle)}
-    //   />
-    // </li>
-  // })
 
   return (
     <div>
