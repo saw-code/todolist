@@ -1,16 +1,13 @@
-import React, {useState, ChangeEvent, MouseEvent, useCallback, memo} from 'react';
-import styles from "./Todolist.module.css"
+import React, {useState, memo} from 'react';
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import {pink} from '@mui/material/colors';
 import {filterType, TodolistType} from "../AppWithRedux";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../state/store";
-import {addTaskAC, changeIsDoneAC, removeTaskAC, updateTaskAC} from "../state/tasks-reducer";
+import {addTaskAC} from "../state/tasks-reducer";
 import {changeFilterAC, removeTodolistAC, updateTodolistAC} from "../state/todolists-reducer";
 import {Task} from "./Task";
 

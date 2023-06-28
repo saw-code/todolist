@@ -6,9 +6,7 @@ import {pink} from "@mui/material/colors";
 import {EditableSpan} from "./EditableSpan";
 import {TaskType} from "./TodolistWithRedux";
 import {changeIsDoneAC, removeTaskAC, updateTaskAC} from "../state/tasks-reducer";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../state/store";
-import {filterType} from "../AppWithRedux";
+import {useDispatch} from "react-redux";
 
 export type TaskPropsType = {
   tasksForTodolist: TaskType[]

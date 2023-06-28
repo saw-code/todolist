@@ -8,7 +8,8 @@ import {Grid, Paper} from "@mui/material";
 import {addTaskAC, changeIsDoneAC, removeTaskAC, updateTaskAC} from "./state/tasks-reducer";
 import {addTodolistAC, changeFilterAC, removeTodolistAC, updateTodolistAC} from "./state/todolists-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./state/store";
+import {tasksSelector, todolistsSelector} from "./state/selectors";
+
 
 export type filterType = "all" | "active" | "completed"
 
@@ -28,9 +29,9 @@ function AppWithRedux() {
   // всего объекта состояния (определили в store.ts), а вторым параметром то, что хотим из нашего параметра возвратить.
   // useSelector - это ф-ция которая принимает коллбэк у которого есть параметр state и возвращаем наши todolists
   // и tasks во втором случае
-  let todolists = useSelector<AppRootStateType, TodolistType[]>(state => state.todolists)
+  let todolists = useSelector(todolistsSelector)
 
-  let tasks = useSelector<AppRootStateType, TasksType>(state => state.tasks)
+  let tasks = useSelector(tasksSelector)
 
   // для того чтобы заработал функционал, нам нужен dispatch
   const dispatch = useDispatch()
